@@ -1,0 +1,5 @@
+GET http://localhost:3000/api/notes/1
+
+###
+//Error, ruta incorrecta
+GET http://localhost:3000/api/somethingdoesntexist
