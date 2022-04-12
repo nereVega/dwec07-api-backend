@@ -6,6 +6,7 @@ const logger = require('./loggerMiddleware')
 
 //data
 let notes = require('./data/notes')
+let users = require('./data/users')
 
 //index package
 const homePage = require('./home')
@@ -19,6 +20,10 @@ app.use(logger)
 
 app.get('/', (req, res) => {
     res.send(homePage)
+})
+
+app.get('/api/users', (req,res) => {
+    res.send(users)
 })
 
 app.get('/api/notes', (req, res) => {
