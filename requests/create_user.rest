@@ -1,0 +1,18 @@
+POST  http://localhost:3000/api/users
+Content-Type: application/json
+
+{
+    "username": "manolo52",
+    "email": "manolo52@gmail.com",
+    "password": "manolo52"
+}
+
+###
+POST https://safe-forest-85043.herokuapp.com/api/users/
+Content-Type: application/json
+
+{
+    "username": "manolo52",
+    "email": "manolo52@gmail.com",
+    "password": "manolo52"
+}

@@ -22,9 +22,37 @@ app.get('/', (req, res) => {
     res.send(homePage)
 })
 
+// USERS
 app.get('/api/users', (req,res) => {
     res.send(users)
 })
+
+app.post('/api/users', (req, res) => {
+    const user = req.body
+    
+    if(!user){
+        return res.status(400).json({
+            error: 'note.content is missing'
+        })
+    }
+
+    const ids = users.map(user => user.id)
+    const maxId = Math.max(...ids)
+
+    const newUser = {
+        username: user.username,
+        email: user.email,
+        password: user.password,
+        id: maxId + 1
+    }
+
+    users = [...users, newUser]
+
+    res.status(201).json(newUser) //201 created
+})
+
+
+//NOTES
 
 app.get('/api/notes', (req, res) => {
     res.json(notes)
