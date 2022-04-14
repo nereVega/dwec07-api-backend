@@ -1,0 +1,21 @@
+PUT  http://localhost:3000/api/users/2
+Content-Type: application/json
+
+{
+    "username": "manolo52",
+    "email": "manolo52@gmail.com",
+    "password": "manolo52"
+}
+
+###
+GET http://localhost:3000/api/users
+
+###
+PUT https://safe-forest-85043.herokuapp.com/api/users/2
+Content-Type: application/json
+
+{
+    "username": "manolo52",
+    "email": "manolo52@gmail.com",
+    "password": "manolo52"
+}
