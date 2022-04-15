@@ -5,11 +5,12 @@ const cors = require('cors')
 const logger = require('./loggerMiddleware')
 
 //data
-let notes = require('./data/notes')
+// let notes = require('./data/notes')
 let users = require('./data/users')
+let boards = require('./data/boards')
 
 //index package
-const homePage = require('./home')
+const APIhomePage = require('./home')
 
 const app = express()
 app.use(cors()) //por defecto admite que cualquier origen pueda usar nuestra API
@@ -19,7 +20,7 @@ app.use(logger)
 
 
 app.get('/', (req, res) => {
-    res.send(homePage)
+    res.send(APIhomePage)
 })
 
 // USERS
@@ -62,8 +63,8 @@ app.post('/api/users', (req, res) => {
 })
 
 app.put('/api/users/:id', (req, res) => {
-    const id = Number(req.params.id)
-    const indexOfUser = users.map(user => user.id).indexOf(id)
+    const reqId = Number(req.params.id)
+    const indexOfUser = users.map(user => user.id).indexOf(reqId)
     const user = req.body
     console.log(users[indexOfUser])
 
@@ -86,52 +87,72 @@ app.delete('/api/users/:id', (req, res) => {
     res.status(204).end()
 })
 
+////////////////////////////////////////////////////////////////////
 
-//NOTES
 
-app.get('/api/notes', (req, res) => {
-    res.json(notes)
+//BOARDS
+app.get('/api/boards', (req,res) => {
+    res.send(boards)
 })
 
-app.get('/api/notes/:id', (req, res) => {
+app.get('/api/boards/:id', (req,res) => {
     const id = Number(req.params.id)
-    const note = notes.find(note => note.id === id)
-    if(note){
-        res.json(note)
-    }else{
+    const board = boards.find(board => board.id === id)
+    if(board) {
+        res.json(board)
+    }
+    else {
         res.status(404).end()
     }
 })
 
-app.delete('/api/notes/:id', (req, res) => {
+app.post('/api/boards', (req,res) => {
+    const board = req.body  //solo contiene ownerID y titulo
+
+    const ids = boards.map(board => board.id)
+    const maxId = Math.max(...ids)
+
+    const newBoard = {
+        id: maxId+1,
+        titulo: board.titulo,
+        owner: board.owner,
+        toDoList: [],
+        doingList: [],
+        doneList: []
+    }
+
+    boards = [...boards,newBoard]
+
+    res.status(201).json(newBoard)
+})
+
+app.put('/api/boards', (req,res) => {
+    const newItem = req.body   // contiene board.id, board.titulo y content
+    const boardIndex = Number(boards.map(board => board.id).indexOf(newItem.boardId))
+
+    if (boardIndex === -1) res.status(401).end()
+    
+    if (newItem.titulo !== 'Undefined') boards[boardIndex].titulo = newItem.titulo
+    if (newItem.content !== 'undefined') boards[boardIndex].toDoList = [...boards[boardIndex].toDoList, newItem.content]
+
+    res.status(201).json(newItem)
+})
+
+app.delete('/api/boards/:id', (req,res) => {
     const id = Number(req.params.id)
-    notes = notes.filter(note => note.id !== id)
+    boards = boards.filter(board => board.id !== id)
+
     res.status(204).end()
 })
 
-app.post('/api/notes', (req, res) => {
-    const note = req.body
-    
-    if(!note || !note.content){
-        return res.status(400).json({
-            error: 'note.content is missing'
-        })
-    }
 
-    const ids = notes.map(note => note.id)
-    const maxId = Math.max(...ids)
+//     const newNote = {
+//         id: maxId + 1,
+//         content: note.content,
+//         important: typeof note.important !== 'undefined' ? note.important : false,
+//         date: new Date().toISOString()
+//     }
 
-    const newNote = {
-        id: maxId + 1,
-        content: note.content,
-        important: typeof note.important !== 'undefined' ? note.important : false,
-        date: new Date().toISOString()
-    }
-
-    notes = [...notes, newNote]
-
-    res.status(201).json(newNote) //201 created
-})
 
 //Controlar rutas incorrectas
 app.use((req,res) => {

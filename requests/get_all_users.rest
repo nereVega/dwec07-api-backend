@@ -1,1 +1,4 @@
 GET https://safe-forest-85043.herokuapp.com/api/users/
+
+###
+GET http://localhost:3000/api/users

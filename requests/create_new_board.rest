@@ -1,0 +1,20 @@
+POST  http://localhost:3000/api/boards/
+Content-Type: application/json
+
+{
+    "titulo": "Otra pizarra de tareas",
+    "owner": 1
+}
+
+###
+GET  http://localhost:3000/api/boards/
+
+
+###
+POST https://safe-forest-85043.herokuapp.com/api/boards/
+Content-Type: application/json
+
+{
+    "titulo": "DWES Tarea Evaluativa",
+    "owner": 1
+}

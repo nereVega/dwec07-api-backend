@@ -1,0 +1,11 @@
+PUT http://localhost:3000/api/boards/
+Content-Type: application/json
+
+{
+    "boardId": 3,
+    "titulo": "Tareas Personales Modificado",
+    "content": "Comprar pan"
+}
+
+###
+GET http://localhost:3000/api/boards/
