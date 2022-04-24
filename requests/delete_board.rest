@@ -2,3 +2,6 @@ DELETE http://localhost:3000/api/boards/4
 
 ###
 GET http://localhost:3000/api/boards
+
+###
+DELETE https://safe-forest-85043.herokuapp.com/api/boards/5

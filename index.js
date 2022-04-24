@@ -92,6 +92,7 @@ app.delete('/api/users/:id', (req, res) => {
 
 //BOARDS
 app.get('/api/boards', (req,res) => {
+    console.log(req)
     res.send(boards)
 })
 

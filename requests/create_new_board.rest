@@ -15,6 +15,6 @@ POST https://safe-forest-85043.herokuapp.com/api/boards/
 Content-Type: application/json
 
 {
-    "titulo": "DWES Tarea Evaluativa",
+    "titulo": "Nueva pizarra",
     "owner": 1
 }
