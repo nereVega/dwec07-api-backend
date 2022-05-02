@@ -133,8 +133,8 @@ app.put('/api/boards', (req,res) => {
 
     if (boardIndex === -1) res.status(401).end()
     
-    if (newItem.titulo !== 'Undefined') boards[boardIndex].titulo = newItem.titulo
-    if (newItem.content !== 'undefined') boards[boardIndex].toDoList = [...boards[boardIndex].toDoList, newItem.content]
+    if (newItem.titulo) boards[boardIndex].titulo = newItem.titulo
+    if (newItem.content) boards[boardIndex].toDoList = [...boards[boardIndex].toDoList, newItem.content]
 
     res.status(201).json(newItem)
 })
