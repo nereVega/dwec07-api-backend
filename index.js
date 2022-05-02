@@ -129,12 +129,35 @@ app.post('/api/boards', (req,res) => {
 
 app.put('/api/boards', (req,res) => {
     const newItem = req.body   // contiene board.id, board.titulo y content
-    const boardIndex = Number(boards.map(board => board.id).indexOf(newItem.boardId))
+    const boardIndex = Number(boards.map(board => board.id).indexOf(newItem.boardId)) //localiza el index de la pizarra a editar (devuelve -1 si no existe)
 
     if (boardIndex === -1) res.status(401).end()
     
+    //Caso: actualizar título
     if (newItem.titulo) boards[boardIndex].titulo = newItem.titulo
+    //Caso: agregar task a la pizarra
     if (newItem.content) boards[boardIndex].toDoList = [...boards[boardIndex].toDoList, newItem.content]
+    //Caso: actualizar nombre de task
+    if (newItem.newDescription) {
+        switch (newItem.list) {
+            case ("toDoList"):
+                boards[boardIndex].toDoList[newItem.taskIndex] = newItem.newDescription
+                break
+            case ("doingList"):
+                boards[boardIndex].doingList[newItem.taskIndex] = newItem.newDescription
+                break
+            case ("doneList"):
+                boards[boardIndex].doneList[newItem.taskIndex] = newItem.newDescription
+                break
+        }
+    }
+
+    //Cambio estructura de la lista: cambio de orden, o eliminación/agregado de algún elemento
+    if (newItem.toDoList) boards[boardIndex].toDoList = newItem.toDoList
+
+    if (newItem.doingList) boards[boardIndex].doingList = newItem.doingList
+
+    if (newItem.doneList) boards[boardIndex].doneList = newItem.doneList
 
     res.status(201).json(newItem)
 })

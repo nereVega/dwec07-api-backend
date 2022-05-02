@@ -3,7 +3,15 @@ Content-Type: application/json
 
 {
     "boardId": 3,
-    "titulo": "Tareas Personales Modificado",
+    "content": "Comprar pan"
+}
+
+###
+PUT  https://safe-forest-85043.herokuapp.com/api/boards/
+Content-Type: application/json
+
+{
+    "boardId": 3,
     "content": "Comprar pan"
 }
 

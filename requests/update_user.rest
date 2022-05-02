@@ -15,7 +15,6 @@ PUT https://safe-forest-85043.herokuapp.com/api/users/2
 Content-Type: application/json
 
 {
-    "username": "manolo52 MODIFICADO",
-    "email": "manolo52@gmail.com",
+    "username": "MODIFICADO",
     "password": "manolo52"
 }
